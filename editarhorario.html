@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Horario de Clases</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Global styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      background-color: #f4f7fb;
+      font-size: 16px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background-color: #24478f;
+      color: white;
+      width: 250px;
+      height: 100vh;
+      padding: 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .sidebar h2 img {
+      vertical-align: middle;
+      margin-right: 10px;
+      width: 30px;
+      height: 30px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      color: white;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar ul li a:hover {
+      background-color: #1e3a6b;
+      padding-left: 10px;
+      transition: 0.3s;
+    }
+
+    /* Main content area */
+    .main-content {
+      margin-left: 250px;
+      padding: 40px 20px;
+      width: 100%;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      padding-bottom: 10px;
+    }
+
+    .top-bar .icons a {
+      color: #24478f;
+      font-size: 30px;
+    }
+
+    /* Header */
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* Dropdown for selecting grade */
+    .dropdown-container {
+      margin-bottom: 30px;
+    }
+
+    .dropdown-container label {
+      font-size: 18px;
+      color: #333;
+      margin-right: 10px;
+    }
+
+    select {
+      padding: 12px 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      width: 250px;
+      background-color: white;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #24478f;
+    }
+
+    /* Schedule Table */
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .schedule-table th, .schedule-table td {
+      padding: 15px;
+      text-align: center;
+      border-bottom: 1px solid #f1f1f1;
+      font-size: 16px;
+    }
+
+    .schedule-table th {
+      background-color: #24478f;
+      color: white;
+    }
+
+    .schedule-table td {
+      background-color: #f9f9f9;
+    }
+
+    .schedule-table td:nth-child(odd) {
+      background-color: #e9f2fe;
+    }
+
+    .schedule-table td:hover {
+      background-color: #ddeeff;
+      transition: 0.3s;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fff;
+      text-align: center;
+    }
+
+    /* Save Button */
+    .save-button {
+      display: none; /* Initially hidden */
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 18px;
+      color: white;
+      background-color: #24478f;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 150px;
+      text-align: center;
+    }
+
+    .save-button:hover {
+      background-color: #1e3a6b;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 200px;
+      }
+
+      .main-content {
+        margin-left: 200px;
+      }
+
+      .schedule-table td, .schedule-table th {
+        font-size: 14px;
+      }
+
+      select {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2><img src="Logo2021.png" alt="Logo" width="30" height="30"> SA-EDU</h2>
+    <ul>
+        <li><a href="iniciosecretaria.html">Tablero <i class="fas fa-tachometer-alt"></i></a></li>
+        <li><a href="actualizar.html">Alumnos <i class="fas fa-user-graduate"></i></a></li>
+        <li><a href="horariosecretaria.html">Horario <i class="fas fa-calendar-alt"></i></a></li>
+        <li><a href="asignaciónpuntos.html">Recompensas <i class="fas fa-gift"></i></a></li>
+        <li><a href="mensajessecretaria.html">Bandeja de Entrada <i class="fas fa-envelope"></i></a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="top-bar">
+      <div class="icons">
+        <a href="login.component.html"><i class="fas fa-sign-out-alt"></i></a> <!-- Salir -->
+      </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+      <h1>Horario de Clases</h1>
+    </div>
+
+    <!-- Dropdown for selecting grade -->
+    <div class="dropdown-container">
+      <label for="grado-select">Seleccione un grado y sección:</label>
+      <select id="grado-select">
+        <option value="">Seleccione...</option>
+        <option value="1">1° A</option>
+        <option value="2">2° B</option>
+        <option value="3">3° C</option>
+        <option value="4">4° D</option>
+      </select>
+    </div>
+
+    <!-- Schedule Table (initially hidden) -->
+    <table class="schedule-table" id="schedule-table" style="display: none;">
+      <thead>
+        <tr>
+          <th>Día</th>
+          <th>Hora</th>
+          <th>Materia</th>
+        </tr>
+      </thead>
+      <tbody id="schedule-body">
+        <!-- Dynamic schedule content will go here -->
+      </tbody>
+    </table>
+
+    <!-- Save Button (Initially hidden) -->
+    <button class="save-button" id="save-button">Guardar</button>
+
+  </div>
+
+  <script>
+    // Get references to the DOM elements
+    const gradoSelect = document.getElementById('grado-select');
+    const scheduleTable = document.getElementById('schedule-table');
+    const scheduleBody = document.getElementById('schedule-body');
+    const saveButton = document.getElementById('save-button');
+
+    // Function to display the schedule based on the selected grade
+    gradoSelect.addEventListener('change', function() {
+      const selectedGrade = gradoSelect.value;
+
+      // Show the schedule table once a grade is selected
+      scheduleTable.style.display = selectedGrade ? 'table' : 'none';
+
+      // Show the save button only when a grade is selected
+      saveButton.style.display = selectedGrade ? 'block' : 'none';
+
+      if (selectedGrade === "1") {
+        scheduleBody.innerHTML = `
+          <tr><td>Lunes</td><td><input type="text" value="08:00 - 09:00"></td><td><input type="text" value="Matemáticas"></td></tr>
+          <tr><td>Lunes</td><td><input type="text" value="09:00 - 10:00"></td><td><input type="text" value="Lenguaje"></td></tr>
+          <tr><td>Martes</td><td><input type="text" value="08:00 - 09:00"></td><td><input type="text" value="Estudios Sociales"></td></tr>
+          <tr><td>Miércoles</td><td><input type="text" value="10:00 - 11:00"></td><td><input type="text" value="Ciencias Naturales"></td></tr>
+        `;
+      } else if (selectedGrade === "2") {
+        scheduleBody.innerHTML = `
+          <tr><td>Martes</td><td><input type="text" value="08:00 - 09:00"></td><td><input type="text" value="Ciencias"></td></tr>
+          <tr><td>Martes</td><td><input type="text" value="09:00 - 10:00"></td><td><input type="text" value="Historia"></td></tr>
+          <tr><td>Miércoles</td><td><input type="text" value="08:00 - 09:00"></td><td><input type="text" value="Lenguaje"></td></tr>
+          <tr><td>Jueves</td><td><input type="text" value="10:00 - 11:00"></td><td><input type="text" value="Matemáticas"></td></tr>
+        `;
+      } else if (selectedGrade === "3") {
+        scheduleBody.innerHTML = `
+          <tr><td>Lunes</td><td><input type="text" value="08:00 - 09:00"></td><td><input type="text" value="Geografía"></td></tr>
+          <tr><td>Lunes</td><td><input type="text" value="09:00 - 10:00"></td><td><input type="text" value="Biología"></td></tr>
+          <tr><td>Miércoles</td><td><input type="text" value="08:00 - 09:00"></td><td><input type="text" value="Física"></td></tr>
+          <tr><td>Viernes</td><td><input type="text" value="10:00 - 11:00"></td><td><input type="text" value="Historia"></td></tr>
+        `;
+      } else if (selectedGrade === "4") {
+        scheduleBody.innerHTML = `
+          <tr><td>Lunes</td><td><input type="text" value="09:00 - 10:00"></td><td><input type="text" value="Literatura"></td></tr>
+          <tr><td>Martes</td><td><input type="text" value="08:00 - 09:00"></td><td><input type="text" value="Filosofía"></td></tr>
+          <tr><td>Miércoles</td><td><input type="text" value="10:00 - 11:00"></td><td><input type="text" value="Matemáticas"></td></tr>
+          <tr><td>Viernes</td><td><input type="text" value="08:00 - 09:00"></td><td><input type="text" value="Química"></td></tr>
+        `;
+      }
+    });
+
+    // Save button functionality
+    saveButton.addEventListener('click', function() {
+      alert('Se ha guardado correctamente');
+    });
+  </script>
+
+</body>
+</html>
